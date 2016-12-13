@@ -106,11 +106,36 @@ module.exports = {
 
 	});
 	},
-	getcPedidos : function (req, res,next)
+	getcpedidos : function (req, res,next)
 	{
-		res.render('users/cPedidos', {
+		res.render('users/cpedidos', {
 			isAuthenticated : req.isAuthenticated(),
 			user : req.user
-		})
+		});
+		return res.redirect('/users/cpedidos');
+		
+	},
+	postcpedidos : function (req, res,next)
+	{
+		return res.render('users/cpedidos', {
+			isAuthenticated : req.isAuthenticated(),
+			user : req.user
+		});
+	},
+	getePanel : function (req, res,next)
+	{
+		res.render('users/ePanel', {
+			isAuthenticated : req.isAuthenticated(),
+			user : req.user
+		});
+		return res.redirect('/users/ePanel');
+		
+	},
+	postePanel : function (req, res,next)
+	{
+		return res.render('users/ePanel', {
+			isAuthenticated : req.isAuthenticated(),
+			user : req.user
+		});
 	}
 }

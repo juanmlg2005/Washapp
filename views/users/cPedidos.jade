@@ -1,4 +1,20 @@
 extends ../templates/default
 
 block content
-  
+  div(class='row')
+    div(class='col-md-6 col-md-offset-3')
+     div(class='panel panel-default')
+       div(class='panel-heading')= 'Perfil' 
+         form(action='' method='post')
+           div(class='form-group')
+             label(for="prenda")= 'Nombre: '+ user.nombre
+           div(class='form-group')
+             label(for="cantidad")= 'Domicilio: ' + user.direccion
+           div(class='form-group')
+             label(for="nombre")= 'Telefono: ' + user.telefono
+           div(class='form-group')
+             label(for="email")= 'E-Mail: '+ user.email
+           div(class='form-group')
+             label(for="telefono")= 'Telefono: ' + user.telefono
+           div(class='form-group')
+             label(for="direccion")= 'Usuario: ' + user.usuario
