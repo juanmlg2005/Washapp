@@ -95,7 +95,7 @@ module.exports = {
 		//Abrimos conexion a la base de datos
 		db.connect();
 		//Insertamos el registro mediante el siguiente Query
-		db.query('SELECT * FROM pedido' ,function(err, row, fields){
+		db.query('SELECT * FROM `pedido` WHERE 1',function(err, row, fields){
 			if(err) throw err;
 			console.log('Total de resultados' + results.length);
             console.log('Total de campos devueltos' + fields.length);
@@ -135,10 +135,11 @@ module.exports = {
 		//Insertamos el registro mediante el siguiente Query
 		db.query('SELECT * FROM pedido' ,function(err, row, fields){
 			if(err) throw err;
-			console.log('Total de resultados' + results.length);
-            console.log('Total de campos devueltos' + fields.length);
-            for (var i = 0; i < results.length; i++) {
-   			console.log('ID: ', results[i].ID);
+
+			console.log('Total de resultados' + row.length);
+            console.log('Total de campos devueltos' + row.length);
+            for (var i = 0; i < row.length; i++) {
+   			console.log('idPedido: ', row[i].idPedido);
  		 }
 			db.end();
 		
