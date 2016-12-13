@@ -128,11 +128,23 @@ module.exports = {
 			isAuthenticated : req.isAuthenticated(),
 			user : req.user
 		});
-		return res.redirect('/users/ePanel');
+		var config = require('.././database/config');
+		var db = mysql.createConnection(config);
+		//Abrimos conexion a la base de datos
+		db.connect();
+		//Insertamos el registro mediante el siguiente Query
+		db.query('SELECT * FROM pedido' ,function(err, row, fields){
+			if(err) throw err;
+			console.log('Total de resultados' + results.length);
+            console.log('Total de campos devueltos' + fields.length);
+            for (var i = 0; i < results.length; i++) {
+   			console.log('ID: ', results[i].ID);
+ 		 }
+			db.end();
 		
-	},
+		});},
 	postePanel : function (req, res,next)
-	{
+	      {
 		return res.render('users/ePanel', {
 			isAuthenticated : req.isAuthenticated(),
 			user : req.user
