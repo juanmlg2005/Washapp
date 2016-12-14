@@ -8,10 +8,7 @@ block content
         div(class='panel-body')
           form(action='http://localhost:3000/users/ePanel' method='post' autocomplete='off')
              div(class='form-group')
-                    label(for="usuario")= "Usuario"
-                    input(type='text' name='username' id='usuario' placeholder='Usuario' class='form-control')   
-             div(class='form-group')
-                    label(for="contraseña")= "Contraseña"
-                    input(type='password' name='password'  placeholder='Contraseña' class='form-control')   
-              button(type="submit" class='btn btn-default')= 'Iniciar Sesion' 
-              button(type="submit" class='btn btn-default' onclick = "location='http://localhost:3000/users/mestatus.jade'"/)= 'Modificar estatus' 
+                    label(for="usuario")= "Id"
+                    input(type='text' name='id' id='usuario' placeholder='Id' class='form-control')   
+              button(type="submit" class='btn btn-default' value="buscar" name="buscar")= 'Buscar' 
+              

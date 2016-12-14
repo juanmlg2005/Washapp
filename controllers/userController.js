@@ -130,16 +130,23 @@ module.exports = {
 			user : req.user
 		});
 		// Creamos una variable para la busqueda de pedido mediante un objeto JSON
-		var epedido = {
-			idPedido : req.body.id,
-			nombre  : req.body.nombre
-		};
+		},
+	postePanel : function (req, res,next)
+	      {
+		return res.render('users/ePanel', {
+			isAuthenticated : req.isAuthenticated(),
+			user : req.user
+		});
+
+		var buscar = {
+			buscar : req.body.buscar
+		}
 		var config = require('.././database/config');
 		var db = mysql.createConnection(config);
 		//Abrimos conexion a la base de datos
 		db.connect();
 		//Guardamos el registro mediante el siguiente Query
-		db.query('SELECT `idPedido`, `prenda`, `cantidad`, `nombre`, `email`, `telefono`, `usuario`, `direccion`, `fecha` FROM `pedido` WHERE 1' ,function(err, row, fields){
+		db.query('SELECT SELECT * FROM `pedido` WHERE idPedido LIKE '%buscar%'' ,function(err, row, fields){
 			if(err) throw err;
 			//Pasamos los valores a la variable rpedido
 			var rpedido = row;
@@ -150,13 +157,13 @@ module.exports = {
  		 }
  		 	//Cerramos la conexion a la base de datos
 			db.end();
-		
-		});},
-	postePanel : function (req, res,next)
+			});},
+	mestatus : function (req, res,next)
 	      {
-		return res.render('users/ePanel', {
+		return res.render('users/mestatus', {
 			isAuthenticated : req.isAuthenticated(),
 			user : req.user
 		});
 	}
+
 }
