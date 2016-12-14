@@ -123,24 +123,32 @@ module.exports = {
 		});
 	},
 	getePanel : function (req, res,next)
-	{
+	{	
+		//Verificamos si esta logeado en el sistema, si no manda al login
 		res.render('users/ePanel', {
 			isAuthenticated : req.isAuthenticated(),
 			user : req.user
 		});
+		// Creamos una variable para la busqueda de pedido mediante un objeto JSON
+		var epedido = {
+			idPedido : req.body.id,
+			nombre  : req.body.nombre
+		};
 		var config = require('.././database/config');
 		var db = mysql.createConnection(config);
 		//Abrimos conexion a la base de datos
 		db.connect();
-		//Insertamos el registro mediante el siguiente Query
-		db.query('SELECT * FROM pedido' ,function(err, row, fields){
+		//Guardamos el registro mediante el siguiente Query
+		db.query('SELECT `idPedido`, `prenda`, `cantidad`, `nombre`, `email`, `telefono`, `usuario`, `direccion`, `fecha` FROM `pedido` WHERE 1' ,function(err, row, fields){
 			if(err) throw err;
-
-			console.log('Total de resultados' + row.length);
-            console.log('Total de campos devueltos' + row.length);
-            for (var i = 0; i < row.length; i++) {
-   			console.log('idPedido: ', row[i].idPedido);
+			//Pasamos los valores a la variable rpedido
+			var rpedido = row;
+			console.log('Total de resultados' + rpedido.length);
+            console.log('Total de campos devueltos' + rpedido.length);
+            for (var i = 0; i < rpedido.length; i++) {
+   			console.log('idPedido: ', rpedido[i]);
  		 }
+ 		 	//Cerramos la conexion a la base de datos
 			db.end();
 		
 		});},
