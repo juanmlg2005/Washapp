@@ -129,27 +129,29 @@ module.exports = {
 			isAuthenticated : req.isAuthenticated(),
 			user : req.user
 		});
-		// Creamos una variable para la busqueda de pedido mediante un objeto JSON
 		},
 	postePanel : function (req, res,next)
 	      {
-		return res.render('users/ePanel', {
+	 		res.render('users/ePanel', {
 			isAuthenticated : req.isAuthenticated(),
 			user : req.user
 		});
+	 		var rpedido = "";
+	 		console.log('FUnciona');
 
-		var buscar = {
-			buscar : req.body.buscar
-		}
+		var buscar = req.body.id;
+		
+		console.log('FUnciona2 ' + buscar);
 		var config = require('.././database/config');
 		var db = mysql.createConnection(config);
 		//Abrimos conexion a la base de datos
 		db.connect();
-		//Guardamos el registro mediante el siguiente Query
-		db.query('SELECT SELECT * FROM `pedido` WHERE idPedido LIKE '%buscar%'' ,function(err, row, fields){
+		//Realizamos la buscqueda de informacion mediante el siguiente query
+		//Pasamos los valores por placeholders valor buscar que traemos del formulario
+		db.query('SELECT * FROM `pedido` WHERE idPedido LIKE ?', buscar ,function(err, row, fields){
 			if(err) throw err;
 			//Pasamos los valores a la variable rpedido
-			var rpedido = row;
+			rpedido = row;
 			console.log('Total de resultados' + rpedido.length);
             console.log('Total de campos devueltos' + rpedido.length);
             for (var i = 0; i < rpedido.length; i++) {
