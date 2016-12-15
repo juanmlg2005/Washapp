@@ -144,7 +144,7 @@ module.exports = {
 		var db = mysql.createConnection(config);
 		//Abrimos conexion a la base de datos
 		db.connect();
-		//Realizamos la buscqueda de informacion mediante el siguiente query
+		//Realizamos la busqueda de informacion mediante el siguiente query
 		//Pasamos los valores por placeholders valor buscar que traemos del formulario
 		db.query('SELECT * FROM `pedido` WHERE idPedido LIKE ?', buscar ,function(err, row, fields){
 			if(err) throw err;
