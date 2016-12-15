@@ -137,11 +137,9 @@ module.exports = {
 			user : req.user
 		});
 	 		var rpedido = "";
-	 		console.log('FUnciona');
 
 		var buscar = req.body.id;
 		
-		console.log('FUnciona2 ' + buscar);
 		var config = require('.././database/config');
 		var db = mysql.createConnection(config);
 		//Abrimos conexion a la base de datos
@@ -152,14 +150,16 @@ module.exports = {
 			if(err) throw err;
 			//Pasamos los valores a la variable rpedido
 			rpedido = row;
-			console.log('Total de resultados' + rpedido.length);
-            console.log('Total de campos devueltos' + rpedido.length);
+			console.log('funciona ' + buscar.id);
             for (var i = 0; i < rpedido.length; i++) {
    			console.log('idPedido: ', rpedido[i]);
+   			console.log(rpedido[0]);
  		 }
  		 	//Cerramos la conexion a la base de datos
 			db.end();
-			});},
+			});
+        return res.redirect('/users/ePanel');
+	},
 	mestatus : function (req, res,next)
 	      {
 		return res.render('users/mestatus', {
