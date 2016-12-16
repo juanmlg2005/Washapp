@@ -150,22 +150,51 @@ module.exports = {
 			if(err) throw err;
 			//Pasamos los valores a la variable rpedido
 			rpedido = row;
-			console.log('funciona ' + buscar.id);
             for (var i = 0; i < rpedido.length; i++) {
-   			console.log('idPedido: ', rpedido[i]);
-   			console.log(rpedido[0]);
+   			console.log('idPedido: ', rpedido[i], ' ', i);
  		 }
+ 		 	console.log(rpedido[0]);
  		 	//Cerramos la conexion a la base de datos
 			db.end();
 			});
         return res.redirect('/users/ePanel');
 	},
 	mestatus : function (req, res,next)
-	      {
-		return res.render('users/mestatus', {
+	    {
+	 		res.render('users/mestatus', {
 			isAuthenticated : req.isAuthenticated(),
 			user : req.user
 		});
+		var config = require('.././database/config');
+		var db = mysql.createConnection(config);
+		//Abrimos conexion a la base de datos
+		db.connect();
+		var mpedido = {
+			idPedido : req.body.idPedido,
+			prenda : req.body.prenda,
+			cantidad : req.body.cantidad,
+			nombre : req.body.nombre,
+			email : req.body.email,
+			telefono : req.body.telefono,
+			usuario : req.body.usuario,
+			direccion : req.body.telefono,
+		};
+		//Realizamos el update mediante el siguiente QUERY
+		//Pasamos los valores por placeholders valor buscar que traemos del formulario
+		db.query('UPDATE pedido SET idPedido ,prenda,cantidad,nombre = ?,email = ?, telefono = ?,usuario = ?,direccion = ? WHERE idPedido = ?' , [req.body.idPedido] , [req.body.prenda] ,function(err, row, fields){
+			if(err) throw err;
+ 		 	//Cerramos la conexion a la base de datos
+			db.end();
+			});
+        return res.redirect('/users/mestatus');
+	},
+	getmestatus : function (req, res,next)
+	    {
+	 		res.render('users/mestatus', {
+			isAuthenticated : req.isAuthenticated(),
+			user : req.user
+		});
+        return res.redirect('/users/mestatus');
 	}
 
 }
