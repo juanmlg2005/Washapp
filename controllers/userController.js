@@ -134,11 +134,19 @@ module.exports = {
 	      {
 	 		res.render('users/ePanel', {
 			isAuthenticated : req.isAuthenticated(),
-			user : req.user
+			user : req.user,
+			buscar : req.buscar
 		});
-	 		var rpedido = "";
 
-		var buscar = req.body.id;
+		var buscar = {
+		idPedido : req.body.idPedido,
+			prenda : req.body.prenda,
+			cantidad : req.body.cantidad,
+			nombre : req.body.nombre,
+			email : req.body.email,
+			telefono : req.body.telefono,
+			usuario : req.body.usuario,
+			direccion : req.body.telefono};
 		
 		var config = require('.././database/config');
 		var db = mysql.createConnection(config);
@@ -149,17 +157,22 @@ module.exports = {
 		db.query('SELECT * FROM `pedido` WHERE idPedido LIKE ?', buscar ,function(err, row, fields){
 			if(err) throw err;
 			//Pasamos los valores a la variable rpedido
-			rpedido = row;
-            for (var i = 0; i < rpedido.length; i++) {
-   			console.log('idPedido: ', rpedido[i], ' ', i);
+			buscar = row;
+            for (var i = 0; i < buscar.length; i++) {
+   			console.log('idPedido: ', buscar[i], ' ', i);
  		 }
- 		 	console.log(rpedido[0]);
+ 		 	console.log(buscar[0]);
  		 	//Cerramos la conexion a la base de datos
 			db.end();
 			});
-        return res.redirect('/users/ePanel');
+		return res.render('home',{
+			isAuthenticated : req.isAuthenticated(),
+			user : req.user,
+			buscar : req.buscar
+		});
+
 	},
-	mestatus : function (req, res,next)
+	postmestatus : function (req, res,next)
 	    {
 	 		res.render('users/mestatus', {
 			isAuthenticated : req.isAuthenticated(),
@@ -169,6 +182,7 @@ module.exports = {
 		var db = mysql.createConnection(config);
 		//Abrimos conexion a la base de datos
 		db.connect();
+	
 		var mpedido = {
 			idPedido : req.body.idPedido,
 			prenda : req.body.prenda,
@@ -177,16 +191,21 @@ module.exports = {
 			email : req.body.email,
 			telefono : req.body.telefono,
 			usuario : req.body.usuario,
-			direccion : req.body.telefono,
+			direccion : req.body.direccion,
 		};
 		//Realizamos el update mediante el siguiente QUERY
 		//Pasamos los valores por placeholders valor buscar que traemos del formulario
-		db.query('UPDATE pedido SET idPedido ,prenda,cantidad,nombre = ?,email = ?, telefono = ?,usuario = ?,direccion = ? WHERE idPedido = ?' , [req.body.idPedido] , [req.body.prenda] ,function(err, row, fields){
+		db.query('UPDATE pedido SET ? WHERE idPedido = ?' , [mpedido,req.body.idPedido] ,function(err, row, fields){
 			if(err) throw err;
+			console.log('Nel No funciona');
  		 	//Cerramos la conexion a la base de datos
 			db.end();
 			});
-        return res.redirect('/users/mestatus');
+		console.log('funciona');
+        return res.render('mestatus',{
+			isAuthenticated : req.isAuthenticated(),
+			user : req.user
+		});
 	},
 	getmestatus : function (req, res,next)
 	    {

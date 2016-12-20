@@ -10,4 +10,17 @@ block content
              div(class='form-group')
                     label(for="id")= "Id"
                     input(type='text' name='id' id='id' placeholder='Id' class='form-control')
+        if !buscar 
+             div(class='form-group')
+              label(for="prenda")= 'Nombre: '+ buscar.nombre
+             div(class='form-group')
+             label(for="cantidad")= 'Domicilio: ' + user.direccion
+              div(class='form-group')
+              label(for="nombre")= 'Telefono: ' + user.telefono
+             div(class='form-group')
+              label(for="email")= 'E-Mail: '+ user.email
+              div(class='form-group')
+              label(for="telefono")= 'Telefono: ' + user.telefono
+             div(class='form-group')
+              label(for="direccion")= 'Usuario: ' + user.usuario
              button(type="submit" class='btn btn-default')= 'Buscar'       

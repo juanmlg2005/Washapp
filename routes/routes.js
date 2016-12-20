@@ -20,7 +20,7 @@ router.post('/users/cpedidos', AuthMiddleware.isLogged ,controllers.userControll
 router.get('/users/cpedidos',  AuthMiddleware.isLogged ,controllers.userController.getcpedidos);
 router.post('/users/ePanel', AuthMiddleware.isLogged ,controllers.userController.postePanel);
 router.get('/users/ePanel',  AuthMiddleware.isLogged ,controllers.userController.getePanel);
-router.post('/users/mestatus', AuthMiddleware.isLogged ,controllers.userController.mestatus);
+router.post('/users/mestatus', AuthMiddleware.isLogged ,controllers.userController.postmestatus);
 router.get('/users/mestatus',  AuthMiddleware.isLogged ,controllers.userController.getmestatus);
 router.post('/users/signin', passport.authenticate('local', {
 	successRedirect : '/users/panel',
