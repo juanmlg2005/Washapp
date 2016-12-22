@@ -184,28 +184,24 @@ module.exports = {
 		db.connect();
 	
 		var mpedido = {
-			idPedido : req.body.idPedido,
+			idPedido : req.body.id,
 			prenda : req.body.prenda,
 			cantidad : req.body.cantidad,
-			nombre : req.body.nombre,
-			email : req.body.email,
-			telefono : req.body.telefono,
-			usuario : req.body.usuario,
-			direccion : req.body.direccion,
+		};
+		var id ={
+				idPedido : req.body.id
 		};
 		//Realizamos el update mediante el siguiente QUERY
 		//Pasamos los valores por placeholders valor buscar que traemos del formulario
-		db.query('UPDATE pedido SET ? WHERE idPedido = ?' , [mpedido,req.body.idPedido] ,function(err, row, fields){
+		//Sintaxis UPDATE [Nombre de la tabla] SET [Columnas de la tabla] WHERE [Donde se modificara la fila]
+		db.query('UPDATE pedido SET ? WHERE idPedido = ?' , [mpedido,id] ,function(err, row, fields){
 			if(err) throw err;
 			console.log('Nel No funciona');
  		 	//Cerramos la conexion a la base de datos
 			db.end();
 			});
 		console.log('funciona');
-        return res.render('mestatus',{
-			isAuthenticated : req.isAuthenticated(),
-			user : req.user
-		});
+		return res.redirect('/users/mestatus');
 	},
 	getmestatus : function (req, res,next)
 	    {
