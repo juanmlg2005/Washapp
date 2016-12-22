@@ -16,8 +16,6 @@ router.post('/users/signup', controllers.userController.postSignUp);
 router.get('/users/signin', controllers.userController.getSignIn);
 router.post('/users/ppanel',   AuthMiddleware.isLogged ,controllers.userController.postppanel);
 router.get('/users/ppanel',    AuthMiddleware.isLogged ,controllers.userController.getppanel);
-router.post('/users/cpedidos', AuthMiddleware.isLogged ,controllers.userController.postcpedidos);
-router.get('/users/cpedidos',  AuthMiddleware.isLogged ,controllers.userController.getcpedidos);
 router.post('/users/ePanel', AuthMiddleware.isLogged ,controllers.userController.postePanel);
 router.get('/users/ePanel',  AuthMiddleware.isLogged ,controllers.userController.getePanel);
 router.post('/users/mestatus', AuthMiddleware.isLogged ,controllers.userController.postmestatus);

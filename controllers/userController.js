@@ -58,6 +58,7 @@ module.exports = {
 		})
 		return res.render('users/ppanel', {message: req.flash('info'), authmessage : req.flash('authmessage')});
 		},
+		//Ruta para insertar una pedido
 	postppanel : function(req, res, next){
 		// Usamos un objeto Json
 		var pedido = {
@@ -135,18 +136,9 @@ module.exports = {
 	 		res.render('users/ePanel', {
 			isAuthenticated : req.isAuthenticated(),
 			user : req.user,
-			buscar : req.buscar
 		});
-
 		var buscar = {
-		idPedido : req.body.idPedido,
-			prenda : req.body.prenda,
-			cantidad : req.body.cantidad,
-			nombre : req.body.nombre,
-			email : req.body.email,
-			telefono : req.body.telefono,
-			usuario : req.body.usuario,
-			direccion : req.body.telefono};
+		idPedido : req.body.idPedido};
 		
 		var config = require('.././database/config');
 		var db = mysql.createConnection(config);
@@ -154,22 +146,20 @@ module.exports = {
 		db.connect();
 		//Realizamos la busqueda de informacion mediante el siguiente query
 		//Pasamos los valores por placeholders valor buscar que traemos del formulario
-		db.query('SELECT * FROM `pedido` WHERE idPedido LIKE ?', buscar ,function(err, row, fields){
+		db.query('SELECT * FROM pedido WHERE idPedido = ?', [buscar] ,function(err, row, fields){
 			if(err) throw err;
 			//Pasamos los valores a la variable rpedido
+			console.log('idPedido: ');
 			buscar = row;
             for (var i = 0; i < buscar.length; i++) {
    			console.log('idPedido: ', buscar[i], ' ', i);
  		 }
  		 	console.log(buscar[0]);
+ 		 	
+ 		 	
  		 	//Cerramos la conexion a la base de datos
 			db.end();
 			});
-		return res.render('home',{
-			isAuthenticated : req.isAuthenticated(),
-			user : req.user,
-			buscar : req.buscar
-		});
 
 	},
 	postmestatus : function (req, res,next)
@@ -187,6 +177,7 @@ module.exports = {
 			idPedido : req.body.id,
 			prenda : req.body.prenda,
 			cantidad : req.body.cantidad,
+			estatus :req.body.estatus,
 		};
 		var id ={
 				idPedido : req.body.id
