@@ -81,32 +81,6 @@ module.exports = {
 		});
         return res.redirect('/users/ppanel');
     },
-    getUser : function(req, res, next){ 
-    	db.connect();
-    db.query('SELECT * FROM pedido', function (error, results){
-      if(error) throw error;
-      //console.log(results);
-      res.send(200, results);
-      return next();
-  });
-	},
-	showP : function(req, res,next){
-		var config = require('.././database/config');
-		var db = mysql.createConnection(config);
-		//Abrimos conexion a la base de datos
-		db.connect();
-		//Insertamos el registro mediante el siguiente Query
-		db.query('SELECT * FROM `pedido` WHERE 1',function(err, row, fields){
-			if(err) throw err;
-			console.log('Total de resultados' + results.length);
-            console.log('Total de campos devueltos' + fields.length);
-            for (var i = 0; i < results.length; i++) {
-   			console.log('ID: ', results[i].ID);
- 		 }
-			db.end();
-
-	});
-	},
 	getcpedidos : function (req, res,next)
 	{
 		res.render('users/cpedidos', {
@@ -138,7 +112,8 @@ module.exports = {
 			user : req.user,
 		});
 		var buscar = {
-		idPedido : req.body.idPedido};
+		idPedido : req.body.idPedido
+		};
 		
 		var config = require('.././database/config');
 		var db = mysql.createConnection(config);
@@ -146,21 +121,15 @@ module.exports = {
 		db.connect();
 		//Realizamos la busqueda de informacion mediante el siguiente query
 		//Pasamos los valores por placeholders valor buscar que traemos del formulario
-		db.query('SELECT * FROM pedido WHERE idPedido = ?', [buscar] ,function(err, row, fields){
-			if(err) throw err;
-			//Pasamos los valores a la variable rpedido
-			console.log('idPedido: ');
-			buscar = row;
-            for (var i = 0; i < buscar.length; i++) {
-   			console.log('idPedido: ', buscar[i], ' ', i);
- 		 }
- 		 	console.log(buscar[0]);
- 		 	
- 		 	
- 		 	//Cerramos la conexion a la base de datos
+		db.query('SELECT * FROM pedido WHERE idPedido = ?', [buscar] ,function(err, row, fields)
+		{
+			if(err) return res.redirect('/users/ePanel');
+			var cpedido = row[0];
+			console.log(cpedido);
+			module.exports = cpedido;
+ 		});
 			db.end();
-			});
-
+			return res.redirect('/users/ePanel');
 	},
 	postmestatus : function (req, res,next)
 	    {
@@ -175,8 +144,6 @@ module.exports = {
 	
 		var mpedido = {
 			idPedido : req.body.id,
-			prenda : req.body.prenda,
-			cantidad : req.body.cantidad,
 			estatus :req.body.estatus,
 		};
 		var id ={
