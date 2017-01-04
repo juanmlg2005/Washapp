@@ -44,8 +44,6 @@ app.use(function(req, res, next) {
   err.status = 404;
   next(err);
 });
-// Global variables
-global.cpedido = require('./controllers/userController');
 
 // error handler
 app.use(function(err, req, res, next) {

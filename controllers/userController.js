@@ -69,6 +69,7 @@ module.exports = {
 			telefono : req.body.telefono,
 			usuario : req.body.usuario,
 			direccion : req.body.telefono,
+			precio : req.body.precio
 		};
 		var config = require('.././database/config');
 		var db = mysql.createConnection(config);
@@ -114,23 +115,23 @@ module.exports = {
 		var buscar = {
 		idPedido : req.body.idPedido
 		};
-		
+
 		var config = require('.././database/config');
 		var db = mysql.createConnection(config);
 		//Abrimos conexion a la base de datos
 		db.connect();
 		//Realizamos la busqueda de informacion mediante el siguiente query
 		//Pasamos los valores por placeholders valor buscar que traemos del formulario
-		db.query('SELECT * FROM pedido WHERE idPedido = ?', [buscar] ,function(err, row, fields)
+		 db.query('SELECT * FROM pedido WHERE idPedido = ?', [req.body.idPedido] ,function(err, row, fields)
 		{
-			if(err) return res.redirect('/users/ePanel');
-			var cpedido = row[0];
-			console.log(cpedido);
-			module.exports = cpedido;
- 		});
-			db.end();
-			return res.redirect('/users/ePanel');
-	},
+			if(err) throw err;
+			var cpedido = row;
+		console.log(cpedido.pedido);
+		});
+			res.render('users/ePanel', {
+			cpedido
+		});
+		},
 	postmestatus : function (req, res,next)
 	    {
 	 		res.render('users/mestatus', {
