@@ -8,8 +8,6 @@ block content
         div(class='panel-body')
           form(action='http://localhost:3000/users/ePanel' method='post' autocomplete='off')
              div(class='form-group')
-                label(for="idPedido")= "Id" 
-                input(type='text' name='idPedido' id='idPedido' placeholder='Id' class='form-control')
-             button(type="submit" class='btn btn-default')= 'Buscar' 
-            if cpedido
-              label(for="prenda")= 'Nombre: '+ cpedido.row
+                    label(for="idPedido")= "Pedido"
+                    input(type='text' name='idPedido' id='idPedido' placeholder='Pedido' class='form-control')    
+              button(type="submit" class='btn btn-default')= 'Consultar'

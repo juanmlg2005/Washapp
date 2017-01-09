@@ -107,16 +107,9 @@ module.exports = {
 		});
 		},
 	postePanel : function (req, res,next)
-	      {
-	 		res.render('users/ePanel', {
-			isAuthenticated : req.isAuthenticated(),
-			user : req.user,
-		});
-		var buscar = {
-		idPedido : req.body.idPedido
-		};
-
+	    {
 		var config = require('.././database/config');
+		var myJSON;
 		var db = mysql.createConnection(config);
 		//Abrimos conexion a la base de datos
 		db.connect();
@@ -125,12 +118,16 @@ module.exports = {
 		 db.query('SELECT * FROM pedido WHERE idPedido = ?', [req.body.idPedido] ,function(err, row, fields)
 		{
 			if(err) throw err;
-			var cpedido = row;
-		console.log(cpedido.pedido);
+			myJSON = JSON.stringify(row[0].estatus);
+			console.log(myJSON);
 		});
+		 console.log(myJSON);
 			res.render('users/ePanel', {
-			cpedido
+				isAuthenticated : req.isAuthenticated(),
+			user : req.user,
+			cpedido: myJSON
 		});
+
 		},
 	postmestatus : function (req, res,next)
 	    {
