@@ -1,5 +1,6 @@
 var mysql = require('mysql');
 var bcrypt = require('bcryptjs');
+var myJSON;
 
 
 module.exports = {
@@ -103,31 +104,30 @@ module.exports = {
 		//Verificamos si esta logeado en el sistema, si no manda al login
 		res.render('users/ePanel', {
 			isAuthenticated : req.isAuthenticated(),
-			user : req.user
+			user : req.user,
 		});
 		},
 	postePanel : function (req, res,next)
 	    {
 		var config = require('.././database/config');
-		var myJSON;
 		var db = mysql.createConnection(config);
 		//Abrimos conexion a la base de datos
 		db.connect();
 		//Realizamos la busqueda de informacion mediante el siguiente query
 		//Pasamos los valores por placeholders valor buscar que traemos del formulario
-		 db.query('SELECT * FROM pedido WHERE idPedido = ?', [req.body.idPedido] ,function(err, row, fields)
+		  db.query('SELECT * FROM pedido WHERE idPedido = ?', [req.body.idPedido] ,function(err, row, fields)
 		{
 			if(err) throw err;
-			myJSON = JSON.stringify(row[0].estatus);
-			console.log(myJSON);
+			//Pasamos el estatus de formato JSON a String y lo proyectamos por consola para verificar funcionamiento
+			myJSON = JSON.stringify(row[0].estatus)
+			return myJSON;
 		});
-		 console.log(myJSON);
-			res.render('users/ePanel', {
-				isAuthenticated : req.isAuthenticated(),
+		  console.log(myJSON);
+		  res.render('users/ePanel', {
+		  	isAuthenticated : req.isAuthenticated(),
 			user : req.user,
 			cpedido: myJSON
 		});
-
 		},
 	postmestatus : function (req, res,next)
 	    {
@@ -166,6 +166,33 @@ module.exports = {
 			user : req.user
 		});
         return res.redirect('/users/mestatus');
-	}
+	},
+	posthistorial : function(req,res,next)
+{
+res.render('users/ePanel', {
+				isAuthenticated : req.isAuthenticated(),
+			user : req.user,
+			cpedido: myJSON
+		});
+
+		var config = require('.././database/config');
+		var myJSON;
+		var db = mysql.createConnection(config);
+		//Abrimos conexion a la base de datos
+		db.connect();
+		//Realizamos la busqueda de informacion mediante el siguiente query
+		//Pasamos los valores por placeholders valor buscar que traemos del formulario
+		 db.query('SELECT * FROM pedido WHERE idPedido = ?', [req.body.idPedido] ,function(err, row, fields)
+		{
+			if(err) throw err;
+			//Pasamos el estatus de formato JSON a String y lo proyectamos por consola para verificar funcionamiento
+			myJSON = JSON.stringify(row[0].estatus);
+			console.log(myJSON);
+			res.render('users/ePanel', {
+			cpedido: myJSON
+		});
+		});
+		 console.log(myJSON);
+}
 
 }
