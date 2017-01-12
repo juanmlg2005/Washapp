@@ -105,6 +105,7 @@ module.exports = {
 		res.render('users/ePanel', {
 			isAuthenticated : req.isAuthenticated(),
 			user : req.user,
+			cpedido: ''
 		});
 		},
 	postePanel : function (req, res,next)
@@ -117,12 +118,17 @@ module.exports = {
 		//Pasamos los valores por placeholders valor buscar que traemos del formulario
 		  db.query('SELECT * FROM pedido WHERE idPedido = ?', [req.body.idPedido] ,function(err, row, fields)
 		{
-			if(err) throw err;
-			//Pasamos el estatus de formato JSON a String y lo proyectamos por consola para verificar funcionamiento
-			myJSON = JSON.stringify(row[0].estatus)
+			if(err) console.log(err);
+			//Pasamos el estatus de formato JSON a String 
+			if(row == 0) myJSON = 'No existe registro';else
+			{
+			myJSON = JSON.stringify(row[0].estatus)}
+			if(err) console.log(err);
+			//Retornamos el valor del json en la variable myJSON la cual contiene un string
 			return myJSON;
 		});
 		  console.log(myJSON);
+		  //Volvemos a renderizar la pagina verificando que el usuario este logeado en el sistema
 		  res.render('users/ePanel', {
 		  	isAuthenticated : req.isAuthenticated(),
 			user : req.user,
