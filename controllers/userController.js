@@ -119,8 +119,10 @@ module.exports = {
 		  db.query('SELECT * FROM pedido WHERE idPedido = ?', [req.body.idPedido] ,function(err, row, fields)
 		{
 			if(err) console.log(err);
-			//Pasamos el estatus de formato JSON a String 
-			if(row == 0) myJSON = 'No existe registro';else
+			//Verificamos si existe registro en la base de datos si no existe, asignamos valor a myJSON
+			if(row == 0) myJSON = 'No existe registro';
+			//Si existe valor en la base de datos, asignamos el valor en formato string, Usamos JSON.Stringify para cambia de JSON a String
+			else
 			{
 			myJSON = JSON.stringify(row[0].estatus)}
 			if(err) console.log(err);
@@ -173,32 +175,36 @@ module.exports = {
 		});
         return res.redirect('/users/mestatus');
 	},
-	posthistorial : function(req,res,next)
+	postcHistorial : function(req,res,next)
 {
-res.render('users/ePanel', {
-				isAuthenticated : req.isAuthenticated(),
-			user : req.user,
-			cpedido: myJSON
-		});
-
 		var config = require('.././database/config');
-		var myJSON;
+		var jsonH;
 		var db = mysql.createConnection(config);
 		//Abrimos conexion a la base de datos
 		db.connect();
 		//Realizamos la busqueda de informacion mediante el siguiente query
 		//Pasamos los valores por placeholders valor buscar que traemos del formulario
-		 db.query('SELECT * FROM pedido WHERE idPedido = ?', [req.body.idPedido] ,function(err, row, fields)
+		//SELECT * FROM `pedido` WHERE fecha >= '20121201' AND fecha < '20171203'
+		 db.query('SELECT * FROM pedido WHERE fecha >= ? AND fecha < ? AND usuario = ?', [req.body.fInicio,req.body.fFinal,req.user.usuario]  ,function(err, row, fields)
 		{
 			if(err) throw err;
 			//Pasamos el estatus de formato JSON a String y lo proyectamos por consola para verificar funcionamiento
-			myJSON = JSON.stringify(row[0].estatus);
-			console.log(myJSON);
-			res.render('users/ePanel', {
+			jsonH = JSON.stringify(row[0]);
+			console.log(jsonH);
+			return jsonH;
+		});
+		 res.render('users/cHistorial', {
+		  	isAuthenticated : req.isAuthenticated(),
+			user : req.user,
 			cpedido: myJSON
 		});
+},
+getcHistorial : function(req,res,next)
+{
+res.render('users/cHistorial', {
+				isAuthenticated : req.isAuthenticated(),
+			user : req.user,
 		});
-		 console.log(myJSON);
 }
 
 }

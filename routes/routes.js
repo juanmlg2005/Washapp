@@ -20,6 +20,8 @@ router.post('/users/ePanel', AuthMiddleware.isLogged ,controllers.userController
 router.get('/users/ePanel',  AuthMiddleware.isLogged ,controllers.userController.getePanel);
 router.post('/users/mestatus', AuthMiddleware.isLogged ,controllers.userController.postmestatus);
 router.get('/users/mestatus',  AuthMiddleware.isLogged ,controllers.userController.getmestatus);
+router.post('/users/cHistorial', AuthMiddleware.isLogged ,controllers.userController.postcHistorial);
+router.get('/users/cHistorial',  AuthMiddleware.isLogged ,controllers.userController.getcHistorial);
 router.post('/users/signin', passport.authenticate('local', {
 	successRedirect : '/users/panel',
 	failureRedirect : '/users/signin',
