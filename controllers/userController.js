@@ -1,8 +1,8 @@
 var mysql = require('mysql');
 var bcrypt = require('bcryptjs');
 var myJSON;
-
-
+var jsonH;
+var datos;
 module.exports = {
 	getSignUp : function(req, res, next){
 		return res.render('users/signup');
@@ -116,7 +116,7 @@ module.exports = {
 		db.connect();
 		//Realizamos la busqueda de informacion mediante el siguiente query
 		//Pasamos los valores por placeholders valor buscar que traemos del formulario
-		  db.query('SELECT * FROM pedido WHERE idPedido = ?', [req.body.idPedido] ,function(err, row, fields)
+		  db.query('SELECT * FROM pedido WHERE idPedido = ? AND usuario = ?', [req.body.idPedido,req.user.usuario] ,function(err, row, fields)
 		{
 			if(err) console.log(err);
 			//Verificamos si existe registro en la base de datos si no existe, asignamos valor a myJSON
@@ -128,6 +128,7 @@ module.exports = {
 			if(err) console.log(err);
 			//Retornamos el valor del json en la variable myJSON la cual contiene un string
 			return myJSON;
+			db.end();
 		});
 		  console.log(myJSON);
 		  //Volvemos a renderizar la pagina verificando que el usuario este logeado en el sistema
@@ -178,25 +179,39 @@ module.exports = {
 	postcHistorial : function(req,res,next)
 {
 		var config = require('.././database/config');
-		var jsonH;
 		var db = mysql.createConnection(config);
 		//Abrimos conexion a la base de datos
 		db.connect();
 		//Realizamos la busqueda de informacion mediante el siguiente query
-		//Pasamos los valores por placeholders valor buscar que traemos del formulario
-		//SELECT * FROM `pedido` WHERE fecha >= '20121201' AND fecha < '20171203'
+		//Pasamos los valores por placeholders valor buscar que traemos del formulario y agregamos el usuario que esta loggeado para prevenir que vea los datos de otros usuarios
 		 db.query('SELECT * FROM pedido WHERE fecha >= ? AND fecha < ? AND usuario = ?', [req.body.fInicio,req.body.fFinal,req.user.usuario]  ,function(err, row, fields)
 		{
-			if(err) throw err;
+			if(row == 0) jsonH= 'Sin registros o seleccione otro criterio';
+			else
+			{
 			//Pasamos el estatus de formato JSON a String y lo proyectamos por consola para verificar funcionamiento
-			jsonH = JSON.stringify(row[0]);
-			console.log(jsonH);
+			for (var f=0;f<row.length;f++){
+				datos+='Prenda: '+row[f].prenda;
+				datos+='Cantidad: '+row[f].cantidad;
+				datos+='Nombre: '+row[f].nombre;
+				datos+='E-mail: '+row[f].email;
+				datos+='Telefono: '+row[f].telefono;
+				datos+='Direccion: '+row[f].direccion;
+				datos+='esatus: '+row[f].estatus;
+				datos+='precio: '+row[f].precio;
+				datos+='Fecha: '+row[f].fecha;
+				console.log(datos);
+			}
+			jsonH = JSON.stringify(row[0]);}
+			if(err) console.log(err);
 			return jsonH;
+			db.end();
 		});
+		 console.log(jsonH);
 		 res.render('users/cHistorial', {
 		  	isAuthenticated : req.isAuthenticated(),
 			user : req.user,
-			cpedido: myJSON
+			cpedido: jsonH
 		});
 },
 getcHistorial : function(req,res,next)
