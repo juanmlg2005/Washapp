@@ -148,11 +148,12 @@ module.exports = {
 		var db = mysql.createConnection(config);
 		//Abrimos conexion a la base de datos
 		db.connect();
-	
+		// Guardamos las variables del formulario en un array mpedido
 		var mpedido = {
 			idPedido : req.body.id,
 			estatus :req.body.estatus,
 		};
+		//Guardamos el id del formulario en la variable id
 		var id ={
 				idPedido : req.body.id
 		};
@@ -161,11 +162,9 @@ module.exports = {
 		//Sintaxis UPDATE [Nombre de la tabla] SET [Columnas de la tabla] WHERE [Donde se modificara la fila]
 		db.query('UPDATE pedido SET ? WHERE idPedido = ?' , [mpedido,id] ,function(err, row, fields){
 			if(err) throw err;
-			console.log('Nel No funciona');
  		 	//Cerramos la conexion a la base de datos
 			db.end();
 			});
-		console.log('funciona');
 		return res.redirect('/users/mestatus');
 	},
 	getmestatus : function (req, res,next)
@@ -189,27 +188,14 @@ module.exports = {
 			if(row == 0) jsonH= 'Sin registros o seleccione otro criterio';
 			else
 			{
-			//Pasamos el estatus de formato JSON a String y lo proyectamos por consola para verificar funcionamiento
+			//Pasamos el resultado a String 
 			historia = row;
-			for (var f=0;f<row.length;f++){
-				datos+='Prenda: '+row[f].prenda;
-				datos+='Cantidad: '+row[f].cantidad;
-				datos+='Nombre: '+row[f].nombre;
-				datos+='E-mail: '+row[f].email;
-				datos+='Telefono: '+row[f].telefono;
-				datos+='Direccion: '+row[f].direccion;
-				datos+='esatus: '+row[f].estatus;
-				datos+='precio: '+row[f].precio;
-				datos+='Fecha: '+row[f].fecha;
-				console.log(datos);
-			}
 			jsonH = JSON.stringify(row[0]);}
 			if(err) console.log(err);
 			return jsonH;
 			db.end();
 			res.render('users/cHistorial',{historia : historia});
 		});
-		 console.log(jsonH);
 		 res.render('users/cHistorial', {
 		  	isAuthenticated : req.isAuthenticated(),
 			user : req.user,
