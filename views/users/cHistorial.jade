@@ -14,9 +14,34 @@ block content
                     label(for="fFinal")= "Fecha final de busqueda"
                     input(type='text' name='fFinal' id='fFinal' placeholder='Año-Mes-Dia' class='form-control')   
               button(type="submit" class='btn btn-default')= 'Consultar '
-          if cpedido
-            table
-                tr
-                    th cpedido
-                    th cpedido.usuario
-                    th
+  if cpedido
+            div(class=['ui', 'container', 'grid', 'stackable'])
+              div(class=['sixteen', 'wide', 'column'])
+                h2(class=['ui','header','blue','dividing'])= 'Historial'
+                table(class=['ui','table', 'celled'] id='tbl-productos')
+                  thead
+                    tr
+                      th='ID'
+                      th='Prenda'
+                      th='Cantidad'
+                      th='Nombre'
+                      th='Email'
+                      th='Telefono'
+                      th='Direccion'
+                      th='Estatus'
+                      th='Precio'
+                      th='Fecha'
+                  tbody
+                    each historias in historia
+                      tr
+                        td= historias.idPedido
+                        td= historias.prenda
+                        td= historias.cantidad
+                        td= historias.nombre 
+                        td= historias.email
+                        td= historias.telefono
+                        td= historias.direccion
+                        td= historias.estatus
+                        td= historias.precio
+                        td= historias.fecha   
+

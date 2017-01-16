@@ -190,6 +190,7 @@ module.exports = {
 			else
 			{
 			//Pasamos el estatus de formato JSON a String y lo proyectamos por consola para verificar funcionamiento
+			historia = row;
 			for (var f=0;f<row.length;f++){
 				datos+='Prenda: '+row[f].prenda;
 				datos+='Cantidad: '+row[f].cantidad;
@@ -206,6 +207,7 @@ module.exports = {
 			if(err) console.log(err);
 			return jsonH;
 			db.end();
+			res.render('users/cHistorial',{historia : historia});
 		});
 		 console.log(jsonH);
 		 res.render('users/cHistorial', {
