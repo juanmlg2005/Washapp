@@ -105,7 +105,6 @@ module.exports = {
 		res.render('users/ePanel', {
 			isAuthenticated : req.isAuthenticated(),
 			user : req.user,
-			cpedido: ''
 		});
 		},
 	postePanel : function (req, res,next)
@@ -130,8 +129,6 @@ module.exports = {
 			return myJSON;
 			db.end();
 		});
-		  console.log(myJSON);
-		  //Volvemos a renderizar la pagina verificando que el usuario este logeado en el sistema
 		  res.render('users/ePanel', {
 		  	isAuthenticated : req.isAuthenticated(),
 			user : req.user,
@@ -149,18 +146,11 @@ module.exports = {
 		//Abrimos conexion a la base de datos
 		db.connect();
 		// Guardamos las variables del formulario en un array mpedido
-		var mpedido = {
-			idPedido : req.body.id,
-			estatus :req.body.estatus,
-		};
 		//Guardamos el id del formulario en la variable id
-		var id ={
-				idPedido : req.body.id
-		};
 		//Realizamos el update mediante el siguiente QUERY
 		//Pasamos los valores por placeholders valor buscar que traemos del formulario
 		//Sintaxis UPDATE [Nombre de la tabla] SET [Columnas de la tabla] WHERE [Donde se modificara la fila]
-		db.query('UPDATE pedido SET ? WHERE idPedido = ?' , [mpedido,id] ,function(err, row, fields){
+		db.query('UPDATE pedido SET estatus = ? WHERE idPedido = ?' , [req.body.estatus,req.body.id] ,function(err, row, fields){
 			if(err) throw err;
  		 	//Cerramos la conexion a la base de datos
 			db.end();
