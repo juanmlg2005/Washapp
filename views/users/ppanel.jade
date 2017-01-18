@@ -4,30 +4,32 @@ block content
   div(class='row')
     div(class='col-md-6 col-md-offset-3')
      div(class='panel panel-default')
-       div(class='panel-heading')= 'Registrar Pedido ' 
+       div(class='panel-pedido')= 'Registrar Pedido ' 
+       ul
          form(action='http://localhost:3000/users/ppanel' method='post')
            div(class='form-group')
-             label(for="prenda")= 'Prenda'
-             input(type='text' name='prenda' id='prenda' placeholder='Prenda' class='form-control')
+                label(for="prenda")= 'Prenda'
+                input(type='text' name='prenda' id='prenda' placeholder='Prenda' class='form-control')
            div(class='form-group')
-             label(for="cantidad")= 'Cantidad'
-             input(type='text' name='cantidad' id='cantidad' placeholder='cantidad' class='form-control')
+                label(for="cantidad")= 'Cantidad'
+                input(type='text' name='cantidad' id='cantidad' placeholder='cantidad' class='form-control')
            div(class='form-group')
-             label(for="nombre")= 'Nombre'
-             input(type='text' name='nombre' id='nombre' placeholder='Nombre' class='form-control')  
+                label(for="nombre")= 'Nombre'
+                input(type='text' name='nombre' id='nombre' placeholder='Nombre' class='form-control')  
            div(class='form-group')
-             label(for="email")= 'E-Mail'
-             input(type='email' name='email' id='email' placeholder='E-mail' class='form-control')  
+                label(for="email")= 'E-Mail'
+                input(type='email' name='email' id='email' placeholder='E-mail' class='form-control')  
            div(class='form-group')
-             label(for="telefono")= 'Telefono'
-             input(type='telefono' name='telefono' id='telefono' placeholder='Telefono' class='form-control') 
+                label(for="telefono")= 'Telefono'
+                input(type='telefono' name='telefono' id='telefono' placeholder='Telefono' class='form-control') 
            div(class='form-group')
-             label(for="direccion")= 'Direccion'
-             input(type='direccion' name='direccion' id='direccion' placeholder='Direccion' class='form-control')
+                label(for="direccion")= 'Direccion'
+                input(type='direccion' name='direccion' id='direccion' placeholder='Direccion' class='form-control')
            div(class='form-group')
-             label(for="precio")= 'Precio'
-             input(type='precio' name='precio' id='precio' placeholder='Precio' class='form-control')
-             input(type='hidden' name='usuario' value= user.usuario id='usuario')
-           button(type="submit" class='btn btn-default')= 'Generar Pedido'   
-
+                label(for="precio")= 'Precio'
+                input(type='precio' name='precio' id='precio' placeholder='Precio' class='form-control')
+                input(type='hidden' name='usuario' value= user.usuario id='usuario')
+           button(type="submit" class='btn btn-default')= 'Generar Pedido'  
+  div(class=['ui', 'message','error'])
+  script(src='/javascripts/validacion.js') 
 

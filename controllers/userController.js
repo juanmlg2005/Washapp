@@ -57,7 +57,6 @@ module.exports = {
 			isAuthenticated : req.isAuthenticated(),
 			user : req.user
 		})
-		return res.render('users/ppanel', {message: req.flash('info'), authmessage : req.flash('authmessage')});
 		},
 		//Ruta para insertar una pedido
 	postppanel : function(req, res, next){

@@ -8,16 +8,19 @@ block content
         div(class='panel-body')
           form(action='http://localhost:3000/users/cHistorial' method='post' autocomplete='off')
              div(class='form-group')
-                    label(for="fInicio")= "Fecha inicial de busqueda"
+                    label(for="fInicio")= "Fecha inicial "
+                    ul
                     input(type='text' name='fInicio' id='fInicio' placeholder='Año-Mes-Dia' class='form-control')
              div(class='form-group')
-                    label(for="fFinal")= "Fecha final de busqueda"
+                    label(for="fFinal")= "Fecha final "
+                    ul
                     input(type='text' name='fFinal' id='fFinal' placeholder='Año-Mes-Dia' class='form-control')   
               button(type="submit" class='btn btn-default')= 'Consultar '
   if cpedido
             div(class=['ui', 'container', 'grid', 'stackable'])
               div(class=['sixteen', 'wide', 'column'])
                 h2(class=['ui','header','blue','dividing'])= 'Historial'
+                ul
                 table(class=['ui','table', 'celled'] id='tbl-productos')
                   thead
                     tr
