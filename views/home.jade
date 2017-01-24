@@ -1,6 +1,7 @@
 extends templates/default
 
 block content
-  h1= 'Pagina de inicio'
+  h1(class=['ui','header','blue'])= 'Tu ropa jamas estara tan limpia'
   if isAuthenticated
-    p='Bienvenido usuario ' + user.usuario
+    div(class=['ui','container','grid','stackable'])
+            h2(class=['ui','header','blue'])= 'Bienvenido:  ' + user.usuario + ' al sistema'

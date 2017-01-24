@@ -4,7 +4,7 @@ $(function(){
 			identifier : 'nombre',
 			rules : [
 				{
-					type: 'empty',
+					type : 'empty',
 					prompt : 'Por favor ingrese un nombre'
 				}
 

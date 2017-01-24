@@ -69,7 +69,8 @@ module.exports = {
 			telefono : req.body.telefono,
 			usuario : req.body.usuario,
 			direccion : req.body.telefono,
-			precio : req.body.precio
+			precio : req.body.precio,
+			usuario : req.user
 		};
 		var config = require('.././database/config');
 		var db = mysql.createConnection(config);
@@ -165,7 +166,7 @@ module.exports = {
         return res.redirect('/users/mestatus');
 	},
 	postcHistorial : function(req,res,next)
-{
+{		
 		var config = require('.././database/config');
 		var db = mysql.createConnection(config);
 		//Abrimos conexion a la base de datos
@@ -183,14 +184,8 @@ module.exports = {
 			if(err) console.log(err);
 			return jsonH;
 			db.end();
-			res.render('users/cHistorial',{historia : historia});
-		});
-		 res.render('users/cHistorial', {
-		  	isAuthenticated : req.isAuthenticated(),
-			user : req.user,
-			cpedido: jsonH
-		});
-},
+		 return res.redirect('/users/cHistorial',{historia : historia,isAuthenticated : req.isAuthenticated(),user : req.user});
+})},
 getcHistorial : function(req,res,next)
 {
 res.render('users/cHistorial', {
